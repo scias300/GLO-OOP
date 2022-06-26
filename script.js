@@ -27,7 +27,35 @@ const DomElement = function (selector, height, width, bg, fontSize) {
     };
 };
 
-const element1 = new DomElement('.class1', '100px', '10px', '', '20px');
-const element2 = new DomElement('#asdasdasd');
-element1.addElement();
-element2.addElement();
+const square = new DomElement('.square', '100px', '100px', 'green', '0');
+square.makeAbsolute = function () {
+    document.querySelector(`${this.selector}`).style.position = 'absolute';
+};
+square.top = 0;
+square.left = 0;
+square.makeMove = function (event) {
+    const elem = document.querySelector(`${this.selector}`);
+    if (event.key === 'ArrowUp') {
+        this.top -= 10;
+        elem.style.top = this.top + 'px';
+    }
+    if (event.key === 'ArrowLeft') {
+        this.left -= 10;
+        elem.style.left = this.left + 'px';
+    }
+    if (event.key === 'ArrowDown') {
+        this.top += 10;
+        elem.style.top = this.top + 'px';
+    }
+    if (event.key === 'ArrowRight') {
+        this.left += 10;
+        elem.style.left = this.left + 'px';
+    }
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+    square.addElement();
+    square.makeAbsolute();
+});
+
+window.addEventListener('keydown', () => square.makeMove(event));
